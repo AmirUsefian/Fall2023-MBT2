@@ -1,4 +1,5 @@
 #include <iostream>
+using namespace std;
 
 class SelectionSort {
 public:
@@ -24,22 +25,22 @@ private:
 
 int main() {
     int size;
-    std::cout << "Enter the size of the array: ";
-    std::cin >> size;
+    cout << "Enter the size of the array: ";
+    cin >> size;
 
     int* arr = new int[size];
-    std::cout << "Enter elements of the array: ";
+    cout << "Enter elements of the array: ";
     for (int i = 0; i < size; i++) {
-        std::cin >> arr[i];
+        cin >> arr[i];
     }
 
     SelectionSort::sort(arr, size);
 
-    std::cout << "Sorted array: ";
+    cout << "Sorted array: ";
     for (int i = 0; i < size; i++) {
-        std::cout << arr[i] << " ";
+        cout << arr[i] << " ";
     }
-    std::cout << std::endl;
+    cout << std::endl;
 
     delete[] arr;
 
