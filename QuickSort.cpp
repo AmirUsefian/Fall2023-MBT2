@@ -1,4 +1,5 @@
 #include <iostream>
+using namespace std;
 
 class QuickSort {
 public:
@@ -38,21 +39,21 @@ private:
 
 int main() {
     int size;
-    std::cout << "Enter the size of the array: ";
-    std::cin >> size;
+    cout << "Enter the size of the array: ";
+    cin >> size;
 
     int* arr = new int[size];
-    std::cout << "Enter the elements of the array: ";
+    cout << "Enter the elements of the array: ";
     for (int i = 0; i < size; i++) {
-        std::cin >> arr[i];
+        cin >> arr[i];
     }
 
     QuickSort quickSort;
     quickSort.sort(arr, size);
 
-    std::cout << "Sorted array: ";
+    cout << "Sorted array: ";
     for (int i = 0; i < size; i++) {
-        std::cout << arr[i] << " ";
+        cout << arr[i] << " ";
     }
 
     delete[] arr;
