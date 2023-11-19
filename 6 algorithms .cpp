@@ -6,7 +6,8 @@ using namespace std;
 
 class SortingAlgorithms {
 public:
-    vector<int> bubbleSort(vector<int> arr) {
+    // Bubble Sort
+    void bubbleSort(vector<int>& arr) {
         int n = arr.size();
         for (int i = 0; i < n-1; i++) {
             for (int j = 0; j < n-i-1; j++) {
@@ -15,10 +16,10 @@ public:
                 }
             }
         }
-        return arr;
     }
 
-    vector<int> insertionSort(vector<int> arr) {
+    // Insertion Sort
+    void insertionSort(vector<int>& arr) {
         int n = arr.size();
         for (int i = 1; i < n; i++) {
             int key = arr[i];
@@ -29,9 +30,10 @@ public:
             }
             arr[j+1] = key;
         }
-        return arr;
     }
-    vector<int> selectionSort(vector<int> arr) {
+
+    // Selection Sort
+    void selectionSort(vector<int>& arr) {
         int n = arr.size();
         for (int i = 0; i < n-1; i++) {
             int minIndex = i;
@@ -42,14 +44,14 @@ public:
             }
             swap(arr[i], arr[minIndex]);
         }
-        return arr;
     }
 
+    // Quick Sort
     void quickSort(vector<int>& arr, int low, int high) {
         if (low < high) {
             int pivot = partition(arr, low, high);
-            quickSort(arr, low, pivot-1);
-            quickSort(arr, pivot+1, high);
+            quickSort(arr, low, pivot - 1);
+            quickSort(arr, pivot + 1, high);
         }
     }
 
@@ -63,52 +65,18 @@ public:
             }
         }
         swap(arr[i+1], arr[high]);
-        return i+1;
+        return i + 1;
     }
 
-    void mergeSort(vector<int>& arr, int l, int r) {
-        if (l < r) {
-            int m = l + (r-l)/2;
-            mergeSort(arr, l, m);
-            mergeSort(arr, m+1, r);
-            merge(arr, l, m, r);
+    // Heap Sort
+    void heapSort(vector<int>& arr) {
+        int n = arr.size();
+        for (int i = n / 2 - 1; i >= 0; i--) {
+            heapify(arr, n, i);
         }
-    }
-
-    void merge(vector<int>& arr, int l, int m, int r) {
-        int n1 = m - l + 1;
-        int n2 = r - m;
-
-        vector<int> L(n1), R(n2);
-        for (int i = 0; i < n1; i++) {
-            L[i] = arr[l + i];
-        }
-        for (int j = 0; j < n2; j++) {
-            R[j] = arr[m + 1 + j];
-        }
-
-        int i = 0, j = 0, k = l;
-        while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
-                arr[k] = L[i];
-                i++;
-            } else {
-                arr[k] = R[j];
-                j++;
-            }
-            k++;
-        }
-
-        while (i < n1) {
-            arr[k] = L[i];
-            i++;
-            k++;
-        }
-
-        while (j < n2) {
-            arr[k] = R[j];
-            j++;
-            k++;
+        for (int i = n-1; i >= 0; i--) {
+            swap(arr[0], arr[i]);
+            heapify(arr, i, 0);
         }
     }
 
@@ -116,83 +84,96 @@ public:
         int largest = i;
         int left = 2*i + 1;
         int right = 2*i + 2;
-
         if (left < n && arr[left] > arr[largest]) {
             largest = left;
         }
-
         if (right < n && arr[right] > arr[largest]) {
             largest = right;
         }
-
         if (largest != i) {
             swap(arr[i], arr[largest]);
             heapify(arr, n, largest);
         }
     }
 
-    vector<int> heapSort(vector<int> arr) {
-        int n = arr.size();
-
-        for (int i = n/2 - 1; i >= 0; i--) {
-            heapify(arr, n, i);
+    // Binary Search
+    int binarySearch(vector<int>& arr, int key) {
+        int low = 0;
+        int high = arr.size() - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (arr[mid] == key) {
+                return mid;
+            } else if (arr[mid] < key) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
         }
-
-        for (int i = n-1; i > 0; i--) {
-            swap(arr[0], arr[i]);
-            heapify(arr, i, 0);
-        }
-
-        return arr;
+        return -1;
     }
 };
 
 int main() {
-    SortingAlgorithms sa;
-    vector<int> inputArr = {64, 25, 12, 22, 11, 4, 3, 2, 6, 5, 9, 75};
-    vector<int> sortedArr;
+    SortingAlgorithms sortAlgo;
+    vector<int> arr;
 
-    cout << "Choose a sorting algorithm:\n";
-    cout << "1. Bubble Sort\n";
-    cout << "2. Insertion Sort\n";
-    cout << "3. Selection Sort\n";
-    cout << "4. Quick Sort\n";
-    cout << "5. Merge Sort\n";
-    cout << "6. Heap Sort\n";
-   
+    cout << "Enter the number of elements: ";
+    int n;
+    cin >> n;
+
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++) {
+        int num;
+        cin >> num;
+        arr.push_back(num);
+    }
+
+    cout << "Choose a sorting algorithm: " << endl;
+    cout << "1. Bubble Sort" << endl;
+    cout << "2. Insertion Sort" << endl;
+    cout << "3. Selection Sort" << endl;
+    cout << "4. Quick Sort" << endl;
+    cout << "5. Heap Sort" << endl;
+
     int choice;
     cin >> choice;
 
     switch(choice) {
         case 1:
-            sortedArr = sa.bubbleSort(inputArr);
+            sortAlgo.bubbleSort(arr);
             break;
         case 2:
-            sortedArr = sa.insertionSort(inputArr);
+            sortAlgo.insertionSort(arr);
             break;
         case 3:
-            sortedArr = sa.selectionSort(inputArr);
+            sortAlgo.selectionSort(arr);
             break;
-        case 4:
-            sa.quickSort(inputArr, 0, inputArr.size()-1);
-            sortedArr = inputArr;
+case 4:
+            sortAlgo.quickSort(arr, 0, arr.size()-1);
             break;
         case 5:
-            sa.mergeSort(inputArr, 0, inputArr.size()-1);
-            sortedArr = inputArr;
-            break;
-        case 6:
-            sortedArr = sa.heapSort(inputArr);
+            sortAlgo.heapSort(arr);
             break;
         default:
-            cout << "Invalid choice\n";
+            cout << "Invalid choice" << endl;
+            return 0;
     }
 
     cout << "Sorted array: ";
-    for (int num : sortedArr) {
+    for (int num : arr) {
         cout << num << " ";
     }
     cout << endl;
+
+    // Binary Search
+    int key = arr[0];
+    int index = sortAlgo.binarySearch(arr, key);
+    if (index != -1) {
+        cout << "Smallest element: " << arr[index] << endl;
+    } else {
+        cout << "Element not found" << endl;
+    }
 
     return 0;
 }
